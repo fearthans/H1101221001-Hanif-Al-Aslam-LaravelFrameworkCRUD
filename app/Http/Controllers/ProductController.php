@@ -32,7 +32,7 @@ class ProductController extends Controller
      */
     public function create(): Response
     {
-        return response(view('produk.create'));
+        return response(view('products.create'));
     }
 
     /**
@@ -59,7 +59,7 @@ class ProductController extends Controller
     {
       $product = Product::findOrFail($id);
 
-      return response(view('produk.edit', ['product' => $product]));
+      return response(view('products.edit', ['product' => $product]));
     }
 
     /**
@@ -95,15 +95,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-  public function destroy(string $id): RedirectResponse
-  {
-      $product = Product::findOrFail($id);
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
 
-      if ($product->delete()) {
-          return redirect(route('welcome'))->with('success', 'Deleted!');
-      }
-
-      return redirect(route('welcome'))->with('error', 'Sorry, unable to delete this!');
-  }
-
+        if ($product->delete()) {
+            return redirect(route('index'))->with('success', 'Deleted!');
+        }
+        return redirect(route('index'))->with('error', 'Sorry, unable to delete this!');
+    }
 }
